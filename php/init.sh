@@ -15,7 +15,23 @@ fi
 
 echo "-- Install PHP ${PHP_VERSION} --"
 apt-get install -y \
-	php${PHP_VERSION} php${PHP_VERSION}-cli php${PHP_VERSION}-common libapache2-mod-php${PHP_VERSION} php${PHP_VERSION} php${PHP_VERSION}-mysql php${PHP_VERSION}-fpm php${PHP_VERSION}-curl php${PHP_VERSION}-gd php${PHP_VERSION}-mysql php${PHP_VERSION}-bz2 php-xml php${PHP_VERSION}-soap php${PHP_VERSION}-zip
+	libapache2-mod-php${PHP_VERSION} \
+	php${PHP_VERSION} \
+	php${PHP_VERSION}-cli \
+	php${PHP_VERSION}-common \
+	php${PHP_VERSION}-mysql \
+	php${PHP_VERSION}-fpm \
+	php${PHP_VERSION}-curl \
+	php${PHP_VERSION}-gd \
+	php${PHP_VERSION}-mysql \
+	php${PHP_VERSION}-bz2 \
+	php${PHP_VERSION}-xml \
+	php${PHP_VERSION}-soap \
+	php${PHP_VERSION}-zip \
+	php${PHP_VERSION}-mbstring \
+	php${PHP_VERSION}-mcrypt \
+	php${PHP_VERSION}-intl
+
 a2enmod proxy_fcgi setenvif
 a2enconf php${PHP_VERSION}-fpm
 
@@ -26,6 +42,7 @@ if [ "$ENVIRONMENT" = "dev" ]; then
 fi
 
 phpenmod mcrypt
+phpenmod mbstring
 
 # Change PHP settings (short_open_tag, ...)
 sed 's/short_open_tag = Off/short_open_tag = On/g' -i /etc/php/${PHP_VERSION}/apache2/php.ini
@@ -41,7 +58,7 @@ chmod +x /usr/bin/composer
 
 if [ "$ENVIRONMENT" = "dev" ]; then
 	echo '-- Activate XDebug --'
-	cat >> /etc/php/5.6/apache2/php.ini <<EOF
+	cat >> /etc/php/${PHP_VERSION}/apache2/php.ini <<EOF
 [xdebug]
 xdebug.remote_enable=1
 xdebug.remote_host="172.17.0.1"
@@ -51,8 +68,8 @@ EOF
 fi
 
 if [ "$ENVIRONMENT" = "dev" ]; then
-	# install imap + roundcube
-	apt-get install -y courier-imap roundcube
+	# install imap 
+	apt-get install -y courier-imap 
 
 	# activate history page up/down in inputrc
 	sed 's/^# \(.*history-search.*\)$/\1/g' -i /etc/inputrc
@@ -81,9 +98,9 @@ EOF
 	# disable postfix bouncing
 	sed 's/^.*bounce.*$/#\0/g' -i /etc/postfix/master.cf
 
-	# activate roundcube aliases
-	sed 's/^# *\(.*Alias.*\)$/\1/g' -i /etc/roundcube/apache.conf
-
-	# fix roundcube permissions
-	chown vagrant /etc/roundcube/ -R
+	# install squirrelmail and set vagrant passwd
+	apt-get install -y squirrelmail
+	chown -R vagrant /etc/squirrelmail/ /var/lib/squirrelmail/
+	ln -s /etc/squirrelmail/apache.conf /etc/apache2/conf-enabled/squirrelmail.conf
+	usermod -p '$6$VIHcMG0a$ACsnlC6J0LzqraKV5a9sm3jgBypFp4kCd7ju9BYgcdMeQtqVo1wuNHhF3MEWQUQVsKrzKgcHQZUc6p8PCZYFK.' vagrant
 fi

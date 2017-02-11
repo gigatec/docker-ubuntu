@@ -5,7 +5,6 @@ ADD php/run.sh /run.sh
 
 RUN /init.sh 16.04 5.6 prod
 
-ADD files/usr/local/bin /usr/local/bin
-ADD files/root /root
+ADD files/ /
 
 CMD /run.sh

@@ -20,10 +20,10 @@ for dump in current*.sql.gz; do
 		zcat $dump | mysql -u root $db
 
 		cd /vagrant/public
-		OPTIONS_TABLE=$(wp db tables | grep _options)
-		SITEURL=$(echo 'select option_value from '$OPTIONS_TABLE' where option_name="siteurl"' | wp db query | tail -n 1)
+		OPTIONS_TABLE=$(wp --allow-root db tables | grep _options)
+		SITEURL=$(echo 'select option_value from '$OPTIONS_TABLE' where option_name="siteurl"' | wp --allow-root db query | tail -n 1)
 		if [ "$SITEURL" ]; then
-			wp search-replace "${SITEURL%/}" "http://$VIRTUAL_HOST"
+			wp --allow-root search-replace "${SITEURL%/}" "http://$VIRTUAL_HOST"
 		fi
 
 	fi

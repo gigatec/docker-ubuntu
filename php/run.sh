@@ -1,13 +1,13 @@
 #!/bin/sh
 
-/etc/init.d/courier-authdaemon restart
+/etc/init.d/courier-authdaemon start
 /etc/init.d/courier-imap restart
 /etc/init.d/postfix restart
 /etc/init.d/rsync restart
 /etc/init.d/mysql restart
 /etc/init.d/apache2 restart
-/etc/init.d/ondemand restart
-/etc/init.d/rc.local restart
+/etc/init.d/ondemand start
+/etc/init.d/rc.local start
 
 echo "Loading Docker System: ${DOCKER_SYSTEM}..."
 
@@ -18,11 +18,11 @@ wordpress)
 	cp /vagrant/public/wp-config.php-vagrant /vagrant/public/wp-config.php
 
 	# Import DB (if not exists)
-	su - vagrant -c "wpimport"
+	wpimport
 
 	echo 'Frontend: http://'$VIRTUAL_HOST'/'
 	echo 'PHPMyAdmin: http://'$VIRTUAL_HOST'/phpmyadmin/ (User: root, Pass: )'
-	echo 'Webmail: http://'$VIRTUAL_HOST'/roundcube/ (User: vagrant, Pass: vagrant, Host: localhost)'
+	echo 'Webmail: http://'$VIRTUAL_HOST'/squirrelmail/ (User: vagrant, Pass: vagrant)'
 	;;
 
 magento)
@@ -53,7 +53,7 @@ magento)
 	echo 'Magento Frontend: http://'$VIRTUAL_HOST'/'
 	echo 'Magento Backend: http://'$VIRTUAL_HOST'/'$MAGE_BACKEND'/'
 	echo 'PHPMyAdmin: http://'$VIRTUAL_HOST'/phpmyadmin/ (User: root, Pass: )'
-	echo 'Webmail: http://'$VIRTUAL_HOST'/roundcube/ (User: vagrant, Pass: vagrant, Host: localhost)'
+	echo 'Webmail: http://'$VIRTUAL_HOST'/squirrelmail/ (User: vagrant, Pass: vagrant)'
 	;;
 
 *)
@@ -62,7 +62,7 @@ magento)
 
 	echo 'Frontend: http://'$VIRTUAL_HOST'/'
 	echo 'PHPMyAdmin: http://'$VIRTUAL_HOST'/phpmyadmin/ (User: root, Pass: )'
-	echo 'Webmail: http://'$VIRTUAL_HOST'/roundcube/ (User: vagrant, Pass: vagrant, Host: localhost)'
+	echo 'Webmail: http://'$VIRTUAL_HOST'/squirrelmail/ (User: vagrant, Pass: vagrant)'
 	;;
 
 esac
