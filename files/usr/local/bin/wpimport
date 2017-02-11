@@ -23,7 +23,7 @@ for dump in current*.sql.gz; do
 		OPTIONS_TABLE=$(wp db tables | grep _options)
 		SITEURL=$(echo 'select option_value from '$OPTIONS_TABLE' where option_name="siteurl"' | wp db query | tail -n 1)
 		if [ "$SITEURL" ]; then
-			wp search-replace "${SITEURL%/}" "http://localhost:8080"
+			wp search-replace "${SITEURL%/}" "http://$VIRTUAL_HOST"
 		fi
 
 	fi

@@ -1,8 +1,10 @@
 web:
   image: gigatec/ubuntu-16.04-php(5.6|7.0)-(dev|prod)
-  container_name: <project>.dev
+  container_name: <project>
+  hostname: <project>
   environment:
     - DOCKER_SYSTEM=<wordpress|magento|plain|>
+    - VIRTUAL_HOST=<project>.lvh.me
   volumes:
     - ./:/vagrant
   expose:

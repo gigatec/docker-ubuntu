@@ -20,9 +20,9 @@ wordpress)
 	# Import DB (if not exists)
 	su - vagrant -c "wpimport"
 
-	echo 'Frontend: http://localhost:8080/'
-	echo 'PHPMyAdmin: http://localhost:8080/phpmyadmin/ (User: root, Pass: )'
-	echo 'Webmail: http://localhost:8080/roundcube/ (User: vagrant, Pass: vagrant, Host: localhost)'
+	echo 'Frontend: http://'$VIRTUAL_HOST'/'
+	echo 'PHPMyAdmin: http://'$VIRTUAL_HOST'/phpmyadmin/ (User: root, Pass: )'
+	echo 'Webmail: http://'$VIRTUAL_HOST'/roundcube/ (User: vagrant, Pass: vagrant, Host: localhost)'
 	;;
 
 magento)
@@ -50,19 +50,19 @@ magento)
 		sh /vagrant/vagrant.boot.sh
 	fi
 
-	echo 'Magento Frontend: http://localhost:8080/'
-	echo 'Magento Backend: http://localhost:8080/'$MAGE_BACKEND'/'
-	echo 'PHPMyAdmin: http://localhost:8080/phpmyadmin/ (User: root, Pass: )'
-	echo 'Webmail: http://localhost:8080/roundcube/ (User: vagrant, Pass: vagrant, Host: localhost)'
+	echo 'Magento Frontend: http://'$VIRTUAL_HOST'/'
+	echo 'Magento Backend: http://'$VIRTUAL_HOST'/'$MAGE_BACKEND'/'
+	echo 'PHPMyAdmin: http://'$VIRTUAL_HOST'/phpmyadmin/ (User: root, Pass: )'
+	echo 'Webmail: http://'$VIRTUAL_HOST'/roundcube/ (User: vagrant, Pass: vagrant, Host: localhost)'
 	;;
 
 *)
 	# Import DB (if not exists)
 	dbimport
 
-	echo 'Frontend: http://localhost:8080/'
-	echo 'PHPMyAdmin: http://localhost:8080/phpmyadmin/ (User: root, Pass: )'
-	echo 'Webmail: http://localhost:8080/roundcube/ (User: vagrant, Pass: vagrant, Host: localhost)'
+	echo 'Frontend: http://'$VIRTUAL_HOST'/'
+	echo 'PHPMyAdmin: http://'$VIRTUAL_HOST'/phpmyadmin/ (User: root, Pass: )'
+	echo 'Webmail: http://'$VIRTUAL_HOST'/roundcube/ (User: vagrant, Pass: vagrant, Host: localhost)'
 	;;
 
 esac
