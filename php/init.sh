@@ -58,6 +58,7 @@ chmod +x /usr/bin/composer
 
 if [ "$ENVIRONMENT" = "dev" ]; then
 	echo '-- Activate XDebug --'
+	apt-get install -y php-xdebug
 	cat >> /etc/php/${PHP_VERSION}/apache2/php.ini <<EOF
 [xdebug]
 xdebug.remote_enable=1
