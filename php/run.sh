@@ -27,11 +27,11 @@ wordpress)
 
 magento)
 	# Create local.xml Symlink
-	cd /vagrant/public/$1/app/etc/
+	cd /vagrant/public/app/etc/
 	cp local.xml.vagrant local.xml
 
 	# Import DB (if not exists)
-	mageimport $1
+	mageimport
 
 	# Output Magento links
 	# Get Magento settings
@@ -42,12 +42,6 @@ magento)
 	else
 		MAGE_PREFIX="$(magerun db:info prefix 2> /dev/null)"
 		MAGE_BACKEND="$(echo "Mage::getConfig()->getNode('admin/routers/adminhtml/args/frontName')->asArray()" | magerun -q -n dev:console 2> /dev/null | sed -n 's/^=> "\([^"]*\)"/\1/gp')"
-	fi
-
-	# run custom boot.sh if available
-	if [ -f "/vagrant/vagrant.boot.sh" ]; then
-		dos2unix /vagrant/vagrant.boot.sh
-		sh /vagrant/vagrant.boot.sh
 	fi
 
 	echo 'Magento Frontend: http://'$VIRTUAL_HOST'/'
@@ -66,5 +60,11 @@ magento)
 	;;
 
 esac
+	
+# run custom boot.sh if available
+if [ -f "/vagrant/boot.sh" ]; then
+	dos2unix /vagrant/boot.sh
+	sh /vagrant/boot.sh
+fi
 
 sleep infinity
