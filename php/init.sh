@@ -13,8 +13,18 @@ export DEBIAN_FRONTEND=noninteractive
 if [ "$ENVIRONMENT" = "dev" ]; then
 	echo '-- Install Dev Tools --'
 	apt-get install -y \
-		vim git dos2unix zip wget lynx curl
+		vim git dos2unix zip lynx curl
 fi
+
+echo '-- Install wkhtmltopdf --'
+apt-get install -y wget
+wget http://download.gna.org/wkhtmltopdf/0.12/0.12.3/wkhtmltox-0.12.3_linux-generic-amd64.tar.xz
+tar -xf wkhtmltox-0.12.3_linux-generic-amd64.tar.xz
+mv wkhtmltox /opt/
+
+echo '-- Enable expires & headers --'
+a2enmod expires
+a2enmod headers
 
 echo "-- Install PHP ${PHP_VERSION} --"
 apt-get install -y \
