@@ -7,6 +7,9 @@ ENVIRONMENT="${3:-prod}"
 # Ignore the post install questions
 export DEBIAN_FRONTEND=noninteractive
 
+# Install language pack de_DE
+/usr/share/locales/install-language-pack de_DE
+
 if [ "$ENVIRONMENT" = "dev" ]; then
 	echo '-- Install Dev Tools --'
 	apt-get install -y \
