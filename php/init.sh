@@ -43,7 +43,8 @@ apt-get install -y \
 	php${PHP_VERSION}-zip \
 	php${PHP_VERSION}-mbstring \
 	php${PHP_VERSION}-mcrypt \
-	php${PHP_VERSION}-intl
+	php${PHP_VERSION}-intl \
+	php-gettext
 
 a2enmod proxy_fcgi setenvif
 a2enconf php${PHP_VERSION}-fpm
