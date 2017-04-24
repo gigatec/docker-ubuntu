@@ -7,6 +7,10 @@ ENVIRONMENT="${3:-prod}"
 # Ignore the post install questions
 export DEBIAN_FRONTEND=noninteractive
 
+echo '-- Update & Upgrade Apt --'
+apt-get update
+apt-get upgrade
+
 # Install language pack de_DE
 /usr/share/locales/install-language-pack de_DE
 
